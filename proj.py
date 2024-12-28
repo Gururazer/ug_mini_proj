@@ -8,6 +8,6 @@ if __name__ == "__main__":
     # Train the model
     #model.train(data="datasets/data.yaml", epochs=10, batch=16, imgsz=640,freeze=11, workers=15)
 
-    #results = model.track("E:/DOWNLOAD/animal.jpg",save=True,show=True)
-    results = model(source="D:/VIDEO_DATASET_FOR_THERMAL/OUT.mp4",show=True,save=True)
+    
+    results = model(source="VIDEO_DATASET_FOR_THERMAL/OUT.mp4",show=True,save=True)
     cv2.waitKey(0)
