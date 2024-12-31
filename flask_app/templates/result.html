@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Result</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .result-card {
+            margin-top: 20px;
+        }
+        .back-btn {
+            margin-top: 20px;
+        }
+        video {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center">Detection Result</h1>
+    
+    <!-- Display Result -->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="result-card card">
+                <div class="card-body">
+                    <h5 class="card-title">Detection Output</h5>
+                    
+                    <!-- Video Player Section -->
+                    <div id="video-container">
+                        <!-- The video will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Image Display Section -->
+                    <div id="image-container">
+                        <!-- The image will be dynamically inserted here -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="row back-btn">
+        <div class="col-md-12 text-center">
+            <a href="/" class="btn btn-secondary">Go Back</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Get the values from the Flask backend
+    const isVideo = "{{ is_video }}" === "True";  // Convert to boolean (true or false)
+    console.log("is_video:", isVideo);  // Check the value in console
+    const imageUrl = "{{ image_url }}";  // URL of the image/video
+
+    console.log("is_video:", isVideo);  // Check the value in console
+
+    // Function to display video
+    function displayVideo(url) {
+        const videoContainer = document.getElementById("video-container");
+        
+        // Create video element
+        const videoElement = document.createElement("video");
+        videoElement.setAttribute("controls", "true");
+        videoElement.setAttribute("width", "640");
+        videoElement.setAttribute("height", "480");
+
+        // Create the source element
+        const source = document.createElement("source");
+        source.setAttribute("src", url);  // Set the video source URL
+        source.setAttribute("type", "video/mp4");  // Set the type of video
+        
+        // Append the source to the video element
+        videoElement.appendChild(source);
+        
+        // Append the video element to the container
+        videoContainer.appendChild(videoElement);
+        videoElement.play();  // Play the video
+    }
+
+    // Function to display image
+    function displayImage(url) {
+        const imageContainer = document.getElementById("image-container");
+        const imgElement = document.createElement("img");
+        imgElement.setAttribute("src", url);
+        imgElement.setAttribute("alt", "Detection Result");
+        imgElement.setAttribute("width", "640");
+        imgElement.setAttribute("height", "auto");
+        imageContainer.appendChild(imgElement);
+    }
+
+    // Check the type (video or image) and call the respective function
+    if (isVideo) {
+        displayVideo(imageUrl);  // Display the video if it's a video
+    } else {
+        displayImage(imageUrl);  // Display the image if it's not a video
+    }
+</script>
+
+</body>
+</html>
